@@ -18,7 +18,7 @@ public class PathRequestManager : MonoBehaviour {
 
 	bool isProcessingPath;
 
-	void Start() {
+	void Awake() {
 		instance = this;
 		pathFinding = GetComponent<PathFinding>();
 	}
@@ -27,6 +27,16 @@ public class PathRequestManager : MonoBehaviour {
 		PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
 		instance.pathRequestQueue.Enqueue(newRequest);//How to add item to queue.
 		instance.TryProcessNext();
+	}
+
+	void TryProcessNext()
+	{
+		if (!isProcessingPath && pathRequestQueue.Count > 0)
+		{
+			currentPathRequest = pathRequestQueue.Dequeue();//How to access first item in the queue.
+			isProcessingPath = true;
+			pathFinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
+		}
 	}
 
 	/// <summary>
@@ -38,13 +48,7 @@ public class PathRequestManager : MonoBehaviour {
 		TryProcessNext();
 	}
 
-	void TryProcessNext() {
-		if (!isProcessingPath && pathRequestQueue.Count > 0) {
-			currentPathRequest = pathRequestQueue.Dequeue();//How to access first item in the queue.
-			isProcessingPath = true;
-			pathFinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
-		}
-	}
+	
 
 	//Data structure
 	struct PathRequest

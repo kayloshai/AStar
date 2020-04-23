@@ -12,19 +12,18 @@ public class Grid : MonoBehaviour {
 
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
+
 	void Awake()
 	{
 		nodeDiameter = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-
 		CreatGrid();
 	}
 
 	public int MaxSize {
-		get
-		{
-			return gridSizeX * gridSizeY;
+		get{
+			return gridSizeX * gridSizeY; 
 		}
 	}
 
@@ -32,6 +31,7 @@ public class Grid : MonoBehaviour {
 	{
 		grid = new Node[gridSizeX, gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;//vector3.forward will give z axis in 3D space
+
 		for(int x = 0; x < gridSizeX; x++){
 			for (int y = 0; y < gridSizeY; y++){
 				Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
@@ -41,8 +41,7 @@ public class Grid : MonoBehaviour {
 		}
 	}
 
-	public List<Node> getNeighbours(Node node)
-	{
+	public List<Node> getNeighbours(Node node){
 		List<Node> neighbours = new List<Node>();
 		//loop to search in a 3x3 block
 		for(int x = -1; x <= 1; x++)

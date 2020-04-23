@@ -21,10 +21,7 @@ public class PathFinding : MonoBehaviour {
 
     IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition)
 	{
-		Stopwatch sw = new Stopwatch();
-		sw.Start();
-
-        Vector3[] waypoints = new Vector3[0];
+		Vector3[] waypoints = new Vector3[0];
         bool pathSuccess = false;
 
         Node startNode = grid.GetNodeFromWorldPoint(startPosition);
@@ -40,18 +37,16 @@ public class PathFinding : MonoBehaviour {
                 Node currentNode = openSet.RemoveFirst();
                 closeSet.Add(currentNode);
 
-                if (currentNode == targetNode)
-                {
-                    sw.Stop();
-                    print("Path found: " + sw.ElapsedMilliseconds + " ms");
+                if (currentNode == targetNode){
                     pathSuccess = true;
                     break;
                 }
 
                 foreach (Node neighbour in grid.getNeighbours(currentNode))
                 {
-                    if (!neighbour.walkable || closeSet.Contains(neighbour))
+                    if (!neighbour.walkable || closeSet.Contains(neighbour)) {
                         continue;
+                    }
 
                     int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
                     if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
@@ -62,6 +57,9 @@ public class PathFinding : MonoBehaviour {
 
                         if (!openSet.Contains(neighbour))
                             openSet.Add(neighbour);
+                        else {
+                            openSet.UpdateItem(neighbour);
+                        }
                     }
                 }
             }
@@ -77,6 +75,7 @@ public class PathFinding : MonoBehaviour {
 	{
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
+
 		while(currentNode != startNode){
 			path.Add(currentNode);
 			currentNode = currentNode.Parent;
