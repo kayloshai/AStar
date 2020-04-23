@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour {
-	//public Transform player; //Test Player Position
-	public bool onlyDisplayPathGizmos;
+
+    public bool displayGridGizmos;
 	public LayerMask unwalkableMask;
 	public Vector2 gridWorldSize;
 	public float nodeRadius;
@@ -12,7 +12,7 @@ public class Grid : MonoBehaviour {
 
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
-	void Start()
+	void Awake()
 	{
 		nodeDiameter = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -75,41 +75,16 @@ public class Grid : MonoBehaviour {
 		int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
 		return grid[x, y];
 	}
-
-	//Testing reverse path
-	public List<Node> path;
-
-	//Unity buildt in
+    
 	void OnDrawGizmos(){
 		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-
-		if (onlyDisplayPathGizmos)
-		{
-			if (path != null)
-			{
-				foreach (Node n in path)
-				{
-					Gizmos.color = Color.black;
-					Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-				}
-			}
-		}
-		else {
-			if (grid != null)
-			{
-				//Node playerNode = GetNodeFromWorldPoint(player.position); //Test Player Position
-				foreach (Node n in grid)
-				{
-					Gizmos.color = (n.walkable) ? Color.white : Color.red; // ? Then, : else
-																		   //if(playerNode == n)
-																		   //Gizmos.color = Color.cyan; //Test Player Position
-																		   //Test reverse path													   
-					if (path != null)
-						if (path.Contains(n))
-							Gizmos.color = Color.black;
-					Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-				}
-			}
-		}
-	}
+        if (grid != null && displayGridGizmos)
+        {
+            foreach (Node n in grid)
+            {
+                Gizmos.color = (n.walkable) ? Color.white : Color.red; // ? Then, : else	
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+            }
+        }
+    }
 }

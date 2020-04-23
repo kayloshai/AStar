@@ -57,6 +57,11 @@
      <Compile Include="Assets\Scripts\Heap.cs" />
      <Compile Include="Assets\Scripts\Node.cs" />
      <Compile Include="Assets\Scripts\PathFinding.cs" />
+     <Compile Include="Assets\Scripts\PathRequestManager.cs" />
+     <Compile Include="Assets\Scripts\State.cs" />
+     <Compile Include="Assets\Scripts\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\Unit.cs" />
+     <Compile Include="Assets\Scripts\Wander.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>E:/Game Development/Unity/Astar/AStar/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
